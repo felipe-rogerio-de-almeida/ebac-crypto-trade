@@ -1,6 +1,19 @@
 const { Schema } = require('mongoose');
 const { cpf } = require('cpf-cnpj-validator');
 
+const DepositoSchema = new Schema({
+    valor : {
+        type: Number,
+        required: true,
+        min: 100,
+    },
+    data: {
+        type: Date,
+        required: true,
+    },
+});
+
+
 const UsuarioSchema = new Schema({
     nome: {
         type : String,
@@ -35,6 +48,7 @@ const UsuarioSchema = new Schema({
         required: true,
         select: false, // Does not return this value when using find/select
     },
+    depositos:[DepositoSchema]
 
 });
 
