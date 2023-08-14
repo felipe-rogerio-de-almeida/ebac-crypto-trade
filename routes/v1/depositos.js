@@ -1,5 +1,5 @@
 const express = require('express');
-
+const { checaSaldo } = require('../../services')
 const { logger } = require('../../utils');
 
 const router = express.Router();
@@ -21,6 +21,7 @@ router.post('/', async (req, res) => {
 
         res.json({
             sucesso : true,
+            saldo: await checaSaldo(usuario),
             depositos : usuario.depositos
         })
     } catch (e) {

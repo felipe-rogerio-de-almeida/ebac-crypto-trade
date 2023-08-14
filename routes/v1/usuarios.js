@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 
-const { criaUsuario } = require('../../services');
+const { criaUsuario, checaSaldo } = require('../../services');
 const { logger } = require('../../utils');
 
 const router = express.Router();
@@ -25,10 +25,12 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/me', passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
     res.json({
         sucesso: true,
-        usuario: req.user
+        usuario: req.user,
+        saldo: await checaSaldo(req.user),
     })
 })
 
