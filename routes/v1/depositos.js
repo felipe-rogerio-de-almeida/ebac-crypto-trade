@@ -34,4 +34,36 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.post('/:depositoId/cancelar', async (req, res) => {
+    const usuario = req.user;
+    try{
+
+        const depositoId = req.params.depositoId;
+        const deposito = usuario.depositos.id(depositoId);
+        
+        if (!deposito){
+            res.json({
+                sucesso: false,
+                error: "Depósito não encontrado."
+            });
+        }
+
+        deposito.cancelado = true;
+        await usuario.save();
+
+        res.json({
+            sucesso: true,
+            message: "Depósito cancelado com sucesso",
+            usuario: usuario,
+            saldo: await checaSaldo(usuario),
+        });
+    } catch (e){
+        res.json({
+            sucesso: false,
+            error: e.message,
+        })
+    }
+
+})
+
 module.exports = router;

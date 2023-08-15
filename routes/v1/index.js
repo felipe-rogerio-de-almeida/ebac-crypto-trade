@@ -9,6 +9,7 @@ const authRouter = require('./auth');
 const depositosRouter = require('./depositos');
 const saquesRouter = require('./saques');
 
+
 const router = express.Router();
 
 router.use('/status', statusRouter);
@@ -16,5 +17,6 @@ router.use('/usuarios', usuarioRouter);
 router.use('/auth', authRouter);
 router.use('/depositos', passport.authenticate('jwt', { session:false}),depositosRouter);
 router.use('/saques', passport.authenticate('jwt', { session:false}),saquesRouter);
+
 
 module.exports = router;
