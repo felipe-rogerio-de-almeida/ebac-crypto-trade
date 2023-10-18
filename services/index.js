@@ -4,4 +4,6 @@ module.exports = {
     checaSaldo  : require('./checa-saldo'),
     buscaCotacoesOnline: require('./busca-cotacoes').buscaCotacoesOnline,
     buscaCotacoesNoBanco: require('./busca-cotacoes').buscaCotacoesNoBanco,
+    buscaVariacaoOnline: require('./calcula-variacao').buscaVariacaoOnline,
+    buscaVariacoesNoBanco: require('./calcula-variacao').buscaVariacoesNoBanco,
 };

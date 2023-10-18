@@ -6,7 +6,6 @@ const { logger } = require('../utils');
 
 const cotacoesWorker = async (job, done) => {
     try {
-        console.log("chegou aqui")
         logger.info(`Buscando cotações... Tentativa ${job.attemptsMade + 1}/${job.opts.attempts}`);
     
         const cotacoes = await buscaCotacoesOnline();
