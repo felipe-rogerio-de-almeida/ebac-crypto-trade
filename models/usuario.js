@@ -1,6 +1,20 @@
 const { Schema } = require('mongoose');
 const { cpf } = require('cpf-cnpj-validator');
 
+const MoedasSchema = new Schema({
+    quantidade: {
+        type: Number,
+        required: true,
+    },
+    codigo: {
+        type: String,
+        required: true,
+        unique: true, //Cria indice no banco de dados
+        sparse: true, //Pode haver valores nullos, e esses não seram indexados
+    }
+})
+
+
 const SaqueSchema = new Schema({
     valor:{
         type: Number,
@@ -65,6 +79,7 @@ const UsuarioSchema = new Schema({
     },
     depositos:[DepositoSchema], 
     saques: [SaqueSchema],
+    moeda: [MoedasSchema],
 
 });
 

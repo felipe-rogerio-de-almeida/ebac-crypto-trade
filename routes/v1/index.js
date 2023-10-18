@@ -10,6 +10,7 @@ const depositosRouter = require('./depositos');
 const saquesRouter = require('./saques');
 const cotacoesRouter = require('./cotacoes');
 const variacoesRouter = require('./variacoes');
+const trocasRouter = require('./trocas');
 
 
 const router = express.Router();
@@ -18,6 +19,7 @@ router.use('/status', statusRouter);
 router.use('/usuarios', usuarioRouter);
 router.use('/auth', authRouter);
 router.use('/cotacoes', cotacoesRouter);
+router.use('/trocas', passport.authenticate('jwt', { session:false}),trocasRouter);
 router.use('/depositos', passport.authenticate('jwt', { session:false}),depositosRouter);
 router.use('/saques', passport.authenticate('jwt', { session:false}),saquesRouter);
 router.use('/variacoes',variacoesRouter);
