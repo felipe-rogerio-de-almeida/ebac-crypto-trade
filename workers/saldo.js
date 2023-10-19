@@ -6,7 +6,7 @@ const saldosWorker = async (job, done) => {
     try{
         logger.info(`Checando aumento de saldos... Tentativa ${job.attemptsMade + 1}/${job.opts.attempts}`);
     
-        const corretora = await Corretora.finOne({
+        const corretora = await Corretora.findOne({
             cnpj: CNPJ,
         });
     

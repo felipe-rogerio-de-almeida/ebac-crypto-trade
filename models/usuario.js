@@ -79,7 +79,7 @@ const UsuarioSchema = new Schema({
     },
     depositos:[DepositoSchema], 
     saques: [SaqueSchema],
-    moeda: [MoedasSchema],
+    moedas: [MoedasSchema],
 
 });
 
