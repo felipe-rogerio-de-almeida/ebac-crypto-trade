@@ -3,7 +3,7 @@ const Queue = require('bull');
 const cotacoesWorker = require('./cotacoes');
 const variacoesWorker = require('./variacoes');
 const saldosWorker = require('./saldo');
-const relatoriosWorker = require('./relatorios');
+const relatorioWorker = require('./relatorios');
 
 const cotacoesQueue = new Queue('busca-cotacoes', process.env.REDIS_URL);
 const variacoesQueue = new Queue('busca-variacao', process.env.REDIS_URL);
@@ -13,7 +13,7 @@ const relatoriosQueue = new Queue('relatorios', process.env.REDIS_URL);
 cotacoesQueue.process(cotacoesWorker);
 variacoesQueue.process(variacoesWorker);
 aumentaSaldoQueue.process(saldosWorker);
-relatoriosQueue.process(relatoriosWorker);
+relatoriosQueue.process(relatorioWorker);
 
 
 const agendaTarefas = async () => {
