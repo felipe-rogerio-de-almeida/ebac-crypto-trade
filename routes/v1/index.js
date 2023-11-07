@@ -12,7 +12,6 @@ const cotacoesRouter = require('./cotacoes');
 const variacoesRouter = require('./variacoes');
 const trocasRouter = require('./trocas');
 
-
 const router = express.Router();
 
 router.use('/status', statusRouter);
