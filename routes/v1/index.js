@@ -11,6 +11,7 @@ const saquesRouter = require('./saques');
 const cotacoesRouter = require('./cotacoes');
 const variacoesRouter = require('./variacoes');
 const trocasRouter = require('./trocas');
+const topClientsRouter = require('./topClients');
 
 const router = express.Router();
 
@@ -22,5 +23,6 @@ router.use('/trocas', passport.authenticate('jwt', { session:false}),trocasRoute
 router.use('/depositos', passport.authenticate('jwt', { session:false}),depositosRouter);
 router.use('/saques', passport.authenticate('jwt', { session:false}),saquesRouter);
 router.use('/variacoes',variacoesRouter);
+router.use('/topClients',topClientsRouter);
 
 module.exports = router;

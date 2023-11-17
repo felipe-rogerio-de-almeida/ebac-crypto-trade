@@ -3,12 +3,12 @@ const { Schema } = require('mongoose');
 const RelatorioSchema = new Schema({
     saldo: {
         type: Number,
-        rerquired: true,
+        required: true,
         min: 0,
     },
     usuarioId:{
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Usuario',
         required: true,
     },
     data: {

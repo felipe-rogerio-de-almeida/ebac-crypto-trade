@@ -36,4 +36,3 @@ const VariacaoSchema = new Schema({
 
 module.exports = VariacaoSchema;
 
-//precisa importar no index
