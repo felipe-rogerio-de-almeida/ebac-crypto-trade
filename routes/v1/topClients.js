@@ -8,14 +8,10 @@ router.get("/:dia", async (req, res) => {
     try{
 
         const diaParam = req.params.dia
-        console.log(diaParam)
         
         const dia = new Date(diaParam);
         const diaMaisUm = new Date(dia);
         diaMaisUm.setDate(diaMaisUm.getDate() + 1);
-
-        console.log(`dia: ${dia}`);
-        console.log(`dia + 1: ${diaMaisUm}`);
 
         const topClients = await TopClients.findOne({dia: 
                 {
