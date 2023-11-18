@@ -14,6 +14,18 @@ const router = express.Router();
  *      responses: 
  *          200:
  *              description: Recebe uma lista de cotações, atente-se ao id da cotação que será usado depois na troca de moedas
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              successo:
+ *                                  type: boolean
+ *                                  example: true
+ *                              cotacoes:
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Cotação'
  *      tags:
  *          - operações
  */

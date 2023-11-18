@@ -16,8 +16,31 @@ const swaggerBase = {
                 scheme: 'bearer',
                 bearerFormat: 'JWT'
             }
+        },
+        schemas: {
+            'Cotação': {
+                type: 'object',
+                properties: {
+                    moedas:{
+                        type: 'string',
+                        example: 'SOL'
+                    },
+                    data:{
+                        type: 'datetime',
+                        example:'2023-10-09-09T16:00:00.398Z'
+                    },
+                    id:{
+                        type: 'string',
+                        example: '653183b8471843b2cd3ab62b'
+                    },
+                    valor:{
+                        type: 'number',
+                        example: 126.9995276397357
+                    }
+                }
+            }
         }
-    }
+    }    
 };
 
 const opcoes = {
