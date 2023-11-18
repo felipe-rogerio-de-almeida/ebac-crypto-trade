@@ -1,8 +1,10 @@
 const express = require('express');
 const passport = require('passport');
+const swaggerUi = require('swagger-ui-express');
 
 require('./auth/jwt')
 
+const swaggerConfig = require('./docs');
 const statusRouter = require('./status');
 const usuarioRouter = require('./usuarios');
 const authRouter = require('./auth');
@@ -24,5 +26,8 @@ router.use('/depositos', passport.authenticate('jwt', { session:false}),deposito
 router.use('/saques', passport.authenticate('jwt', { session:false}),saquesRouter);
 router.use('/variacoes',variacoesRouter);
 router.use('/topClients',topClientsRouter);
+router.use('/docs', swaggerUi.serve);
+router.use('/docs', swaggerUi.setup(swaggerConfig));
+
 
 module.exports = router;
