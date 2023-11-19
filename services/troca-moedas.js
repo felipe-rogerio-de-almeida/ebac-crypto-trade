@@ -1,4 +1,4 @@
-const { TAXA_DE_TROCA } = require('../constants');
+const { TAXA_DE_TROCA, CNPJ } = require('../constants');
 const { Cotacao, Corretora } = require('../models');
 
 const buscaCotacao = async(cotacaoId) => {

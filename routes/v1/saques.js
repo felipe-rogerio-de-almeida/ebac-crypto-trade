@@ -5,12 +5,87 @@ const { checaSaldo, sacaCrypto } = require('../../services');
 
 const router = express.Router();
 
+/**
+ *  @openapi
+ *  /v1/saques:
+ *   get:
+ *      description: Consulta os saques do usuario
+ *      security: 
+ *          - auth: []
+ *      responses:
+ *          200:
+ *              description: Informações dos saques do usuário
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              sucesso:
+ *                                  type: boolean
+ *                                  example: true
+ *                              saques:
+ *                                  type: array
+ *                                  items:
+ *                                       $ref: '#/components/schemas/Saque'
+ *          401: 
+ *              description: Autorização está faltando ou inválida
+ *      tags:
+ *          - operações
+ */
+
+
 router.get('/', async (req,res) => {
     res.json({
         sucesso: true,
         saques: req.user.saques,
     });
 });
+
+
+/**
+ *  @openapi
+ *  /v1/saques:
+ *   post:
+ *      description: Rota que adiciona um saque
+ *      security:
+ *          auth: []
+ *      requestBody:
+ *          description: Informações do saque
+ *          required: true
+ *          content: 
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties: 
+ *                          valor:
+ *                              type: number
+ *                              example: 20
+ *      responses:
+ *          200:
+ *              description: Saque efetuado com sucesso
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              sucesso:
+ *                                  type: boolean
+ *                                  example: true
+ *                              saldo: 
+ *                                  type: number
+ *                                  example: 200
+ *                              saques:
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Saque'
+ *          401:
+ *              description: Autorização está faltando ou inválida
+ *          422:
+ *              description: Saldo insuficiente
+ *      tags:
+ *         - operações
+ */
+
 
 router.post('/', async (req, res) => {
     const usuario = req.user;
@@ -34,7 +109,9 @@ router.post('/', async (req, res) => {
             sucesso: true,
             saldo: saldo - valor,
             saques: usuario.saques,
-        })
+        });
+
+        
     }catch (e) {
         logger.error(`Erro no saque: ${e.message}`)
 
@@ -61,8 +138,36 @@ router.post('/', async (req, res) => {
  *              example: BTC
  *              required: true
  *              description: Código da moeda que você quer sacar
+ *      requestBody:
+ *          description: Informe o valor a ser sacado
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          valor:
+ *                              type: number
+ *                              example: 10
+ *      responses:
+ *          200:
+ *              descrption: Saque de crypto efetuado com sucesso
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              sucesso: 
+ *                                  type: boolean
+ *                                  example: true
+ *                              moedas:
+ *                                  type: array
+ *                                  items: 
+ *                                      $ref: '#/components/schemas/Moeda'
+ *          422:
+ *              descrption: Você não possui saldo para sacar esse valor
  *      tags:
-*          - operações
+ *         - operações
  */
 
 router.post('/:codigo', async (req, res) => {
@@ -80,7 +185,11 @@ router.post('/:codigo', async (req, res) => {
 
     }catch(e){
         logger.error(`Erro no saque de Crypto ${e.message}`);
-        error = e.message;
+        res.status(422).json({
+            sucesso: false,
+            error: e.message,
+        })
+
     }
 });
 

@@ -4,12 +4,82 @@ const { logger } = require('../../utils');
 
 const router = express.Router();
 
+/**
+ *  @openapi
+ *  /v1/depositos:
+ *   get:
+ *      description: Consulta os depósitos do usuário
+ *      security:
+ *          - auth: []
+ *      responses:
+ *          200:
+ *              description: Deposito realizado com sucesso
+ *              content:
+ *                  application/json:
+ *                      schema:      
+ *                          type: object
+ *                          properties:
+ *                              sucesso:
+ *                                  type: boolean
+ *                                  examples: true
+ *                              depositos:
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Deposito'
+ *          401: 
+ *              description: Autorização está faltando ou inválida
+ *      tags:
+ *          - operações
+ */
+
+
 router.get('/', (req, res) => {
     res.json({
         sucesso : true,
         depositos : req.user.depositos,
     })
 });
+
+
+/**
+ *  @openapi
+ *  /v1/depositos:
+ *   post:
+ *      description: Realiza um depósito
+ *      security:
+ *          - auth: []
+ *      requestBody:
+ *          description: Informar o valor do depósito
+ *          required: true
+ *          content:   
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          valor:
+ *                              type: number
+ *                              example: 100
+ *      responses:
+ *          200:
+ *              description: Depósito realizado com sucesso
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              sucesso:
+ *                                  type: boolean
+ *                                  example: true
+ *                              saldo: 
+ *                                  type: number
+ *                                  example: 1000
+ *                              depositos:
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Deposito'
+ *      tags:
+ *          - operações
+ */
 
 router.post('/', async (req, res) => {
     const usuario = req.user;
@@ -41,6 +111,46 @@ router.post('/', async (req, res) => {
         });
     }
 });
+
+/**
+ *  @openapi
+ *  /v1/depositos/{depositoID}/cancelar:
+ *   post:
+ *      description: Cancelar um deposito a partir de um ID
+ *      security:
+ *          - auth: []
+ *      parameters:
+ *          - in: path
+ *            name: depositoID
+ *            schema:
+ *              type: string
+ *              example: 655949e3b458d48a02299c5c
+ *              required: true
+ *              description: ID do depósito que deve ser cancelado
+ *      responses:
+ *          200:
+ *              description: Depósito cancelado com sucesso
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              sucesso:
+ *                                  type: boolean
+ *                                  example: true
+ *                              message:
+ *                                  type: string
+ *                                  example: Depósito cancelado com sucesso
+ *                              usuario:
+ *                                  type: array
+ *                                  items:
+ *                                      $ref: '#/components/schemas/Usuario'
+ *                              saldo:
+ *                                  type: number
+ *                                  example: 1000
+ *      tags:
+ *          - operações
+ */
 
 //Cancelar Depósitos pelo do ID
 router.post('/:depositoId/cancelar', async (req, res) => {
