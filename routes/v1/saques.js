@@ -48,7 +48,7 @@ router.get('/', async (req,res) => {
  *   post:
  *      description: Rota que adiciona um saque
  *      security:
- *          auth: []
+ *          - auth: []
  *      requestBody:
  *          description: Informações do saque
  *          required: true

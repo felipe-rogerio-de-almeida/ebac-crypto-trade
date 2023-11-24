@@ -6,11 +6,21 @@ const { logger } = require('../../utils');
 
 const router = express.Router();
 
+
+
 router.post('/', async (req, res) => {
     const dados = req.body.usuario;
+    const urlDeRedirecionamento = req.body.redirect;
+
+    if(!urlDeRedirecionamento){
+        return res.status(422).json({
+            sucesso: false,
+            erro: 'Deve passar um parâmetro redirect para onde o usuário será redirecionado após confirmação!'
+        });
+    }
 
     try{
-        const usuario = await criaUsuario(dados);
+        const usuario = await criaUsuario(dados, urlDeRedirecionamento);
 
         res.json({
             sucesso: true,

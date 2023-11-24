@@ -77,6 +77,16 @@ const UsuarioSchema = new Schema({
         required: true,
         select: false, // Does not return this value when using find/select
     },
+    confirmado:{
+        type:Boolean,
+        default: false,
+    },
+    tokenDeConfirmacao:{
+        type: String,
+        unique: true,
+        sparse: true,
+        select: false
+    },
     depositos:[DepositoSchema], 
     saques: [SaqueSchema],
     moedas: [MoedasSchema],

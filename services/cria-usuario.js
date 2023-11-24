@@ -1,7 +1,10 @@
 const { Usuario } = require('../models/');
 const bcrypt = require('bcrypt');
+const crypto  =require('crypto');
 
-const criaUsuario = async (usuario) =>{
+//TO DO: const { enviaEmailDeConfirmacao } = require('./envia-email')
+
+const criaUsuario = async (usuario, urlDeRedirecionamento) =>{
     if (!usuario.senha){
         throw new Error( 'O campo senha é obrigatório');
     }
@@ -14,7 +17,11 @@ const criaUsuario = async (usuario) =>{
 
     usuario.senha = hashSenha;
 
+    usuario.tokenDeConfirmacao = crypto.randomBytes(32).toString('hex');
+
     const {senha, ...usuarioSalvo} = (await Usuario.create(usuario))._doc;
+
+    //TO DO: enviaEmailDeConfirmacao(usuarioSalvo, urlDeRedirecionamento)
 
     return usuarioSalvo;
 
