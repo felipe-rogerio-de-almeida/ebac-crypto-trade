@@ -2,7 +2,7 @@ const { Usuario } = require('../models/');
 const bcrypt = require('bcrypt');
 const crypto  =require('crypto');
 
-//TO DO: const { enviaEmailDeConfirmacao } = require('./envia-email')
+const { enviaEmailDeConfirmacao } = require('./envia-email')
 
 const criaUsuario = async (usuario, urlDeRedirecionamento) =>{
     if (!usuario.senha){
@@ -21,7 +21,7 @@ const criaUsuario = async (usuario, urlDeRedirecionamento) =>{
 
     const {senha, ...usuarioSalvo} = (await Usuario.create(usuario))._doc;
 
-    //TO DO: enviaEmailDeConfirmacao(usuarioSalvo, urlDeRedirecionamento)
+    await enviaEmailDeConfirmacao(usuarioSalvo, urlDeRedirecionamento)
 
     return usuarioSalvo;
 

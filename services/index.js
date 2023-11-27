@@ -5,9 +5,10 @@ module.exports = {
     sacaCrypto  : require('./saca-crypto'),
     geraPnl     : require('./gera-pnl'),
     trocaMoedas : require('./troca-moedas'),
-    enviaEmail  : require('./envia-email'),
+    confirmaConta : require('./confirma-conta'),
     buscaCotacoesOnline: require('./busca-cotacoes').buscaCotacoesOnline,
     buscaCotacoesNoBanco: require('./busca-cotacoes').buscaCotacoesNoBanco,
     buscaVariacaoOnline: require('./calcula-variacao').buscaVariacaoOnline,
     buscaVariacoesNoBanco: require('./calcula-variacao').buscaVariacoesNoBanco,
+    enviaEmailDeConfirmacao  : require('./envia-email').enviaEmailDeConfirmacao,
 };

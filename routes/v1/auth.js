@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { logger } = require('../../utils');
-const { logaUsuario } = require('../../services');
+const { logaUsuario, confirmaConta } = require('../../services');
 
 const router = express.Router();
 
@@ -60,6 +60,24 @@ router.post('/', async(req, res) => {
 
     }
 
+});
+
+router.get('/confirma-conta', async (req,res) => {
+    try{
+        const { token, redirect } = req.query;
+
+        await confirmaConta(token);
+
+        res.redirect(redirect)
+        
+    }catch (e){
+        logger.error(`Erro na confirmação de conta: ${e.message}`);
+
+        res.status(422).json({
+            sucesso: false,
+            erro: e.message,
+        })
+    }
 })
 
 module.exports = router;
