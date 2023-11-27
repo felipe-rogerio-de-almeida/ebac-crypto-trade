@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const bcrypt = require( 'bcrypt');
 
 const { criaUsuario, checaSaldo } = require('../../services');
 const { logger } = require('../../utils');
@@ -34,6 +35,34 @@ router.post('/', async (req, res) => {
         });
     }
 });
+
+
+//rota que um usuario logado consegue redefinir a propia senha a partir de um jwt valido de usuario:
+
+router.put('/senha', 
+    passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
+        const { senha } = req.body;
+
+        try{
+            const usuario = req.user;
+
+            usuario.senha = await bcrypt.hash(senha,10);
+            await usuario.save();
+
+            res.json({
+                sucesso: true,
+                menssagem: 'Senha alterada com sucesso!'
+            })
+
+        } catch (e){
+            res.status(422).json({
+                sucesso: false,
+                erro: e.message,
+            })
+        }
+})
+
 
 /**
  * @openapi

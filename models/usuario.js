@@ -85,7 +85,13 @@ const UsuarioSchema = new Schema({
         type: String,
         unique: true,
         sparse: true,
-        select: false
+        select: false,
+    },
+    tokenDeRecuperacao:{
+        type: String,
+        unique: true,
+        sparde: true,
+        select: false,
     },
     depositos:[DepositoSchema], 
     saques: [SaqueSchema],
