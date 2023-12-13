@@ -1,0 +1,3 @@
+Aioo <%= nome %>!!
+Parabéns voce lucrou mais de R$ 1000,00 em trades!
+Seu lucro de ontem foi de R$ <%= pnl %>

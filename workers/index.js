@@ -4,16 +4,20 @@ const cotacoesWorker = require('./cotacoes');
 const variacoesWorker = require('./variacoes');
 const saldosWorker = require('./saldo');
 const relatorioWorker = require('./relatorios');
+const pnlWorker = require('./lucro.js')
+
 
 const cotacoesQueue = new Queue('busca-cotacoes', process.env.REDIS_URL);
 const variacoesQueue = new Queue('busca-variacao', process.env.REDIS_URL);
 const aumentaSaldoQueue = new Queue('aumenta-saldo', process.env.REDIS_URL);
 const relatoriosQueue = new Queue('relatorios', process.env.REDIS_URL);
+const pnlQueue = new Queue('geraPnl', process.env.REDIS_URL);
 
 cotacoesQueue.process(cotacoesWorker);
 variacoesQueue.process(variacoesWorker);
 aumentaSaldoQueue.process(saldosWorker);
 relatoriosQueue.process(relatorioWorker);
+pnlQueue.process(pnlWorker);
 
 
 const agendaTarefas = async () => {
@@ -54,7 +58,15 @@ const agendaTarefas = async () => {
             repeat: { cron: '0 0 * * *' },
             attempts: 3,
             backoff: 5000,
-        });
+    });
+
+    pnlQueue.add({},
+        {
+            repeat: { cron: '0 8 * * *' },
+            attempts: 3,
+            backoff: 5000,
+    });
+        
 
 };
 

@@ -1,8 +1,9 @@
-const { Relatorio } = require('../models');
-const { checaSaldo } = require('../services');
+const { Usuario } = require('../models');
+const { geraPnl } = require('../services');
 const { logger } = require('../utils');
 
-const relatorioWorker = async (_, done) =>{
+
+const pnlWorker = async (_, done) =>{
     try {
         logger.info('Buscando todos os usuários da base...')
         
@@ -17,19 +18,15 @@ const relatorioWorker = async (_, done) =>{
             }
 
             for(const usuario of usuarios){
-                logger.info(`Criando relatório para o usuário ${usuario._id}`);
+                logger.info(`gerando PnL para o usuário ${usuario._id}`);
         
-                await Relatorio.create({
-                    usuarioId: usuario._id,
-                    data: new Date(),
-                    saldo: await checaSaldo(usuario),
-                });
+                await geraPnl(usuario._id);
             }
             skip += 10;
         }
 
     
-        logger.info('Relatórios criados com sucesso')
+        logger.info('PnL gerados com sucesso')
         done();
 
     }catch(err){
@@ -38,4 +35,4 @@ const relatorioWorker = async (_, done) =>{
     }
 }
 
-module.exports = relatorioWorker;
+module.exports = pnlWorker;

@@ -1,5 +1,7 @@
 const { Relatorio, Usuario } = require('../models');
 
+const { enviaEmailDeParabenizacao } = require('./envia-email')
+
 const geraPnl = async () => {
     const ontem = new Date()
     ontem.setDate(ontem.getDate() - 1); //Diminui em 1 dia
@@ -8,23 +10,28 @@ const geraPnl = async () => {
     const relatorios = await Relatorio.aggregate([
         {
             $match: {
-                usuarioId: usuario._id,
+                usuarioId: Usuario._id,
                 data: {$gte: ontem}
             }
         },
         { $sort: {data: -1} }
     ]);
 
-    if (relatorios.length === 0) {
-        return 0
+    let lucro = 0;
+    if (relatorios.length > 1) {
+        lucro = relatorios[0].saldo - relatorios[1].saldo;
+    } else if (relatorios.length === 1) {
+        lucro = relatorios[0].saldo;  // Ajuste conforme a lógica de saldo inicial
     }
 
-    if(relatorios.length === 1) {
-        return Relatorios[0].saldo
+    if (lucro >= 1000) {
+        const usuario = await Usuario.findById(usuarioId); // Busca o usuário pelo ID
+        if (usuario) {
+            enviaEmailDeParabenizacao(usuario, lucro);
+        }
     }
-
-    return relatorios[0].saldo - relatorios[1].saldo;
-
+    
+    return lucro;
 }
 
 module.exports = geraPnl

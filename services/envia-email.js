@@ -61,7 +61,25 @@ const enviaEmailDeRecuperacao = async (email, urlDeRedirecionamento) => {
     })
 }
 
+const enviaEmailDeParabenizacao = async (usuario, lucro)=>{
+    const parametros = {
+        nome: usuario.nome,
+        pnl: lucro
+    }
+
+    await transporter.sendMail({
+        from: '"CryptoTrade" <noreply@cryptotrade.com.br>',
+        to: usuario.email,
+        subject: 'Parabéns! Você lucrou mais de R$1000,00 em trade',
+        text: await ejs.renderFile('emails/parabenizacao/template.txt', parametros),
+        html: await ejs.renderFile('emails/parabenizacao/template.html', parametros),
+    })
+
+
+}
+
 module.exports = {
     enviaEmailDeConfirmacao,
-    enviaEmailDeRecuperacao
+    enviaEmailDeRecuperacao,
+    enviaEmailDeParabenizacao,
 }

@@ -14,6 +14,7 @@ const cotacoesRouter = require('./cotacoes');
 const variacoesRouter = require('./variacoes');
 const trocasRouter = require('./trocas');
 const topClientsRouter = require('./topClients');
+const relatoriosRouter = require('./relatorios')
 
 const router = express.Router();
 
@@ -28,6 +29,7 @@ router.use('/variacoes',variacoesRouter);
 router.use('/topClients',topClientsRouter);
 router.use('/docs', swaggerUi.serve);
 router.use('/docs', swaggerUi.setup(swaggerConfig));
+router.use('/relatorios',passport.authenticate('jwt', { session:false}),relatoriosRouter)
 
 
 module.exports = router;
