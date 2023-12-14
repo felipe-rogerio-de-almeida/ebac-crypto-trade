@@ -20,7 +20,7 @@ const geraSegredo = (email) =>{
 }
 
 const validaOtp = (segredo, token) => {
-    return authenticator.check(tokem,segredo)
+    return authenticator.check(token,segredo)
 }
 
 module.exports ={
