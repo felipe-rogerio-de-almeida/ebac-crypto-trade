@@ -47,11 +47,12 @@ router.get('/', async (req,res) => {
  *  @openapi
  *  /v1/saques:
  *   post:
- *      description: Rota que adiciona um saque
+ *      description: Realiza um saque caso o usuário tenha saldo
  *      security:
  *          - auth: []
+ *            otp: []
  *      requestBody:
- *          description: Informações do saque
+ *          description: O quanto você quer sacar
  *          required: true
  *          content: 
  *              application/json:
@@ -80,9 +81,9 @@ router.get('/', async (req,res) => {
  *                                  items:
  *                                      $ref: '#/components/schemas/Saque'
  *          401:
- *              description: Autorização está faltando ou inválida
+ *              description: Login não realizado ou OTP inválido
  *          422:
- *              description: Saldo insuficiente
+ *              description: Saque não realizado
  *      tags:
  *         - operações
  */

@@ -63,6 +63,22 @@ router.put('/senha',
         }
 })
 
+/**
+ *  @openapi
+ *  /V1/usuarios/otp:
+ *      post:
+ *          description: Registra um novo OTP para usuário e retorna um QRCode novo. *Atenção!!* Essa rota irá atualizar o segredo OTP associado ao usuário.
+ *          security:
+ *              - auth: []
+ *          responses: 
+ *              200:
+ *                  description: QRCode para ser escaneado pelo Google Authenticator
+ *              500:
+ *                  description: Erro interno, tente novamente mais tarde
+ *          tags:
+ *              - autenticação
+ */
+
 router.post('/otp',
     passport.authenticate('jwt', { session: false }),
     async (req,res) => {
