@@ -1,6 +1,7 @@
 const express = require('express');
 const { checaSaldo } = require('../../services')
 const { logger } = require('../../utils');
+const { checaOtp } = require('./auth/otp');
 
 const router = express.Router();
 
@@ -48,6 +49,7 @@ router.get('/', (req, res) => {
  *      description: Realiza um depósito
  *      security:
  *          - auth: []
+ *            otp: []
  *      requestBody:
  *          description: Informar o valor do depósito
  *          required: true
@@ -77,11 +79,13 @@ router.get('/', (req, res) => {
  *                                  type: array
  *                                  items:
  *                                      $ref: '#/components/schemas/Deposito'
+ *          401:
+ *              description: Login não realizado ou OTP inválido
  *      tags:
  *          - operações
  */
 
-router.post('/', async (req, res) => {
+router.post('/', checaOtp, async (req, res) => {
     const usuario = req.user;
 
     try{

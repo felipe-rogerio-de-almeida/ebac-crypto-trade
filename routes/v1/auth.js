@@ -80,7 +80,22 @@ router.get('/confirma-conta', async (req,res) => {
     }
 })
 
-//documentar!!
+/**
+ *  @openapi
+ *  /v1/auth/pede-recuperacao:
+ *   get:
+ *      descritpion: Rota para solicitar a recuperação de senha
+ *      security:
+ *          - auth: []
+ *      responses:
+ *          200:
+ *              description: Caso o usuário possua um cadastro ele receberá um email com link para recuperação de senha!
+ *          422:
+ *              description: Erro no envio de recuperação de senha.
+ *      tags:
+ *          - autenticação
+ *      
+ */
 
 router.get('/pede-recuperacao',async (req, res) => {
     try{
@@ -102,6 +117,8 @@ router.get('/pede-recuperacao',async (req, res) => {
         });
     };
 });
+
+
 
 router.get('/valida-token', async (req, res) => {
     try {
