@@ -36,7 +36,6 @@ describe('se senha informada é fraca', () => {
 //Pode se adicionar um .only no describe e no test para que rode apenas esse test especifico *Atenção* cuidado para não deixar o only no codigo
 describe('se a url de redirecionamento não for passada', () => {
     test('ele da um erro de url', async() => {
-        const usuarioTest = { ...usuarioMock, senha: '123' };
 
         await expect(() => criaUsuario(usuarioMock, null)).rejects.toThrow('A URL de redirecionamento é obrigatória')
     });

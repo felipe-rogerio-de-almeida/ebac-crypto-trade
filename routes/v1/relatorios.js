@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.get('/pnl', async (req, res) => {
     try{
-        const pnl = await geraPnl(req.user);
+        const usuarioId = req.user._id;
+        const pnl = await geraPnl(usuarioId);
 
         res.json({
             sucesso: true,

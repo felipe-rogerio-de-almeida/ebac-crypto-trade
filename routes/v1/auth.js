@@ -6,7 +6,7 @@ const { logaUsuario, confirmaConta, enviaEmailDeRecuperacao, validaTokenAlteraca
 const router = express.Router();
 
 /**
- * @openapi
+ * @openapi:
  * /v1/auth:
  *  post:
  *      description: Rota que autentica o usuário e retorna um JWT
