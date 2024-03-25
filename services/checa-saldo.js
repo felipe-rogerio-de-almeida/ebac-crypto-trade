@@ -1,5 +1,5 @@
 const { Usuario } = require('../models/');
-
+ 
 const checaSaldo = async (usuario) => {
     const operacoes = (await Usuario.aggregate([
         {$match: {cpf : usuario.cpf }},

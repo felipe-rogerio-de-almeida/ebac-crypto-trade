@@ -69,4 +69,5 @@ const trocaMoedas = async (usuario, cotacaoId, quantidade, operacao) => {
     return usuario.moedas
 }
 
-module.exports = trocaMoedas;
+module.exports = trocaMoedas
+    

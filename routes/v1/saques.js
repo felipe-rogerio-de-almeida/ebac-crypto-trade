@@ -41,7 +41,7 @@ router.get('/', async (req,res) => {
         saques: req.user.saques,
     });
 });
-
+ 
 
 /**
  *  @openapi

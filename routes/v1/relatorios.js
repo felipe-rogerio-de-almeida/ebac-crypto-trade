@@ -1,5 +1,5 @@
 const express = require('express');
-
+ 
 const { geraPnl } = require('../../services')
 const { logger } = require('../../utils');
 

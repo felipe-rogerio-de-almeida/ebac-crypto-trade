@@ -49,6 +49,8 @@ const checaAutenticacao = (rota) => {
 
 }
 
+
+
 module.exports = {
     geraJwt,
     checaAutenticacao
