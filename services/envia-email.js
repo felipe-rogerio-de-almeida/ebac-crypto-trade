@@ -4,13 +4,23 @@ const jsonWebToken = require('jsonwebtoken')
 
 const { Usuario } = require('../models');
 
+const emailDe = process.env.EMAIL_DE || 'noreply@cryptotrade.com';
 
-
-const transporter = nodemailer.createTransport({
+const opcoes = {
     host:  process.env.EMAIL_HOST,
     port: parseInt(process.env.EMAIL_PORT),
     secure: false,
-});
+
+}
+
+if (process.env.EMAIL_PASSWORD){
+    opcoes.auth = {
+        user:'apikey',
+        pass: process.env.EMAIL_PASSWORD
+    }
+}
+
+const transporter = nodemailer.createTransport(opcoes);
 
 const enviaEmailDeConfirmacao = async (usuario, urlDeRedirecionamento) => {
     const parametros = {
@@ -19,7 +29,7 @@ const enviaEmailDeConfirmacao = async (usuario, urlDeRedirecionamento) => {
     };
 
     await transporter.sendMail({
-        from: '"CryptoTrade" <noreply@cryptotrade.com.br',
+        from: `"CryptoTrade" <${emailDe}>`,
         to: usuario.email,
         subject: 'Confirme a sua conta!',
         text: await ejs.renderFile('emails/confirmacao/template.txt', parametros),
@@ -52,7 +62,7 @@ const enviaEmailDeRecuperacao = async (email, urlDeRedirecionamento) => {
     }
 
     await transporter.sendMail({
-        from: '"CryptoTrade" <noreply@cryptotrade.com.br>',
+        from: `"CryptoTrade" <${emailDe}>`,
         to: usuario.email,
         subject: 'Pedido de recuperação de senha',
         text: await ejs.renderFile('emails/recuperacao-de-senha/template.txt', parametros),
@@ -68,7 +78,7 @@ const enviaEmailDeParabenizacao = async (usuario, lucro)=>{
     }
 
     await transporter.sendMail({
-        from: '"CryptoTrade" <noreply@cryptotrade.com.br>',
+        from: `"CryptoTrade" <${emailDe}>`,
         to: usuario.email,
         subject: 'Parabéns! Você lucrou mais de R$1000,00 em trade',
         text: await ejs.renderFile('emails/parabenizacao/template.txt', parametros),
